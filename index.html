@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css">
+    <title>Smolrun Soulbound on Telos</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+            type="application/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+    <script src="code.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <a href="https://smolrun.com">
+            <img id="logo" src="logo-large.png" alt="Smolrun logo" />
+        </a>
+        <h2>Soulbound!</h2>
+        <button id="connect" class='cta-button connect-wallet-button'>
+            Connect Wallet
+        </button>
+        <p>Hello Telos Friends!</p>
+        <p>Whitelists are out, Proof of Soul is in. By holding a revocable Smolrun Soulbound token you will get special access
+           to limited release collections.</p>
+        <img id="gif" src="SBB.png" alt="Smolrun Soulbound Logo" />
+        <br/>
+        <br/>
+        <div id="mint">
+            <h3>NFTs Minted</h3>
+<!--            <p><span id="eggsMinted">0</span> / <span id="eggsMax">0</span></p>-->
+            <p><span id="eggsMinted">0</span></p>
+            <p id="mintError"></p>
+            <button id="mintButton" class='cta-button connect-wallet-button'>
+                Mint
+            </button>
+            <p>Price: FREE</p>
+            <p>Your Eligibility: <span id="wl">Not Eligible</span></p>
+            <br/>
+        </div>
+            <h3>Your NFTs</h3>
+            <div id="eggWindow">
+                <div id="display">
+                    <p>You don't have a Smolrun Soulbound Token!</p>
+                </div>
+            </div>
+        <br/>
+    </div>
+</body>
+</html>
