@@ -25,9 +25,10 @@ async function connect() {
     console.log("Connecting..."), $("p#mintError").text(""), $("button#connect").prop("disabled", !0);
     try {
         await ethereum.request({ method: "eth_requestAccounts" }), await checkNetwork(), await checkAccount(), console.log("Connected."), $("button#connect").html("Connected").css("background", "red");
+        account = await signer.getAddress();
         await getTokens(account);
     } catch (t) {
-        $("button#connect").prop("disabled", !1), 4001 === t.code ? console.log("Please connect to MetaMask.") : console.error(t), $("p#mintError").text(`${t}`);
+        $("button#connect").prop("disabled", !1), 4001 === t.code ? console.log("Please connect to MetaMask.") : console.error(t);
     }
 }
 async function checkNetwork() {
@@ -67,6 +68,8 @@ async function handleChainChanged(t) {
 }
 async function handleAccountsChanged(t) {
     console.log("Account changed to " + t), t.length;
+    signer = provider.getSigner()
+    account = await signer.getAddress();
     await getTokens(account);
 }
 const getMinted = async () => {
@@ -116,7 +119,7 @@ const getMyBalances = async () => {
             if (result.whitelist) {
                 $("span#wl").text(`Eligible`).css('color', 'green');
             } else {
-                $("span#wl").text(`Not Eligible`);
+                $("span#wl").text(`Not Eligible`).css('color', 'darkred');
             }
 
             merkleProof = result.proof;
