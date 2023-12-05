@@ -108,27 +108,28 @@ const displayTokens = async () => {
 }
 
 const getMyBalances = async () => {
-    $.ajax({
-        url: `https://merkletree.anthonybautist2.repl.co/${account}`,
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        type: "GET", /* or type:"GET" or type:"PUT" */
-        dataType: "json",
-        data: {},
-        success: function (result) {
-            if (result.whitelist) {
-                $("span#wl").text(`Eligible`).css('color', 'green');
-            } else {
-                $("span#wl").text(`Not Eligible`).css('color', 'darkred');
-            }
-
-            merkleProof = result.proof;
-        },
-        error: function () {
-            console.log("error");
-        }
-    });
+    return true;
+    // $.ajax({
+    //     url: `https://merkletree.anthonybautist2.repl.co/${account}`,
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     type: "GET", /* or type:"GET" or type:"PUT" */
+    //     dataType: "json",
+    //     data: {},
+    //     success: function (result) {
+    //         if (result.whitelist) {
+    //             $("span#wl").text(`Eligible`).css('color', 'green');
+    //         } else {
+    //             $("span#wl").text(`Not Eligible`).css('color', 'darkred');
+    //         }
+    //
+    //         merkleProof = result.proof;
+    //     },
+    //     error: function () {
+    //         console.log("error");
+    //     }
+    // });
 }
 
 const mintBean = async () => {
