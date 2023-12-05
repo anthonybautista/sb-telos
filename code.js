@@ -80,8 +80,6 @@ const getMinted = async () => {
         supply = supply + minted;
         let max = Number(await connectedContract.maxMintable());
         max = supply + (max - minted);
-        console.log(supply)
-        console.log(max)
         $("span#eggsMinted").text(`${supply}`), $("span#eggsMax").text(`${max}`), minted === max && $("button#mintEgg").prop("disabled", !0);
 }
 
