@@ -7,7 +7,7 @@ let tokenIds = [];
 const defaultNetwork = "0x28",
     { ethereum: ethereum } = window,
     networks = { "0x28": { chainId: "0x28", chainName: "Telos", nativeCurrency: { decimals: 18, symbol: "TELOS" }, rpcUrls: ["https://rpc1.us.telos.net/evm"], blockExplorerUrls: ["https://teloscan.io"] } };
-const RPC = 'https://rpc1.us.telos.net/evm';
+const RPC = 'https://rpc1.eu.telos.net/evm';
 
 async function checkWeb3() {
     if (void 0 !== window.ethereum) {
@@ -75,10 +75,14 @@ async function handleAccountsChanged(t) {
 const getMinted = async () => {
         const t = new ethers.providers.JsonRpcProvider(RPC);
         connectedContract = new ethers.Contract(NFT_ADDRESS, NFT, t);
-        let minted = await connectedContract.totalSupply();
-        // let minted = await connectedContract.minted();
-        // let max = await connectedContract.maxMintable();
-        $("span#eggsMinted").text(`${minted}`);//, $("span#eggsMax").text(`${max}`), minted === max && $("button#mintEgg").prop("disabled", !0);
+        let supply = Number(await connectedContract.totalSupply());
+        let minted = Number(await connectedContract.minted());
+        supply = supply + minted;
+        let max = Number(await connectedContract.maxMintable());
+        max = supply + (max - minted);
+        console.log(supply)
+        console.log(max)
+        $("span#eggsMinted").text(`${supply}`), $("span#eggsMax").text(`${max}`), minted === max && $("button#mintEgg").prop("disabled", !0);
 }
 
 const getTokens = async (address) => {
@@ -130,41 +134,41 @@ const getMyBalances = async () => {
     });
 }
 
-// const mintBean = async () => {
-//     signer = provider.getSigner()
-//     connectedContract = new ethers.Contract(NFT_ADDRESS, NFT, signer);
-//         try {
-//             if (ethereum) {
-//                 $("p#mintError").text("");
-//                 let n = await connectedContract.mint();
-//                 $("p#mintError").text("Minting...");
-//                 await n.wait();
-//                 let a = `<a href='https://teloscan.io/tx/${n.hash}' target="_blank" rel="noreferrer">\n                                  View Transaction</a>`;
-//                 $("p#mintError").html(`Successfully minted: ${a}`), getMinted();
-//                 getTokens(account);
-//             } else console.log("Ethereum object doesn't exist!"), $("p#mintError").text("Connect wallet and refresh!");
-//         } catch (t) {
-//             console.log(t), $("p#mintError").text(`${t.data.message}`);
-//         }
-// };
-
 const mintBean = async () => {
     signer = provider.getSigner()
     connectedContract = new ethers.Contract(NFT_ADDRESS, NFT, signer);
-    try {
-        if (ethereum) {
-            $("p#mintError").text("");
-            let n = await connectedContract.merkleMint(merkleProof);
-            $("p#mintError").text("Minting...");
-            await n.wait();
-            let a = `<a href='https://teloscan.io/tx/${n.hash}' target="_blank" rel="noreferrer">\n                                  View Transaction</a>`;
-            $("p#mintError").html(`Successfully minted: ${a}`), getMinted();
-            await getTokens(account);
-        } else console.log("Ethereum object doesn't exist!"), $("p#mintError").text("Connect wallet and refresh!");
-    } catch (t) {
-        console.log(t), $("p#mintError").text(`${t.data.message}`);
-    }
+        try {
+            if (ethereum) {
+                $("p#mintError").text("");
+                let n = await connectedContract.mint();
+                $("p#mintError").text("Minting...");
+                await n.wait();
+                let a = `<a href='https://teloscan.io/tx/${n.hash}' target="_blank" rel="noreferrer">\n                                  View Transaction</a>`;
+                $("p#mintError").html(`Successfully minted: ${a}`), getMinted();
+                getTokens(account);
+            } else console.log("Ethereum object doesn't exist!"), $("p#mintError").text("Connect wallet and refresh!");
+        } catch (t) {
+            console.log(t), $("p#mintError").text(`${t.data.message}`);
+        }
 };
+
+// const mintBean = async () => {
+//     signer = provider.getSigner()
+//     connectedContract = new ethers.Contract(NFT_ADDRESS, NFT, signer);
+//     try {
+//         if (ethereum) {
+//             $("p#mintError").text("");
+//             let n = await connectedContract.merkleMint(merkleProof);
+//             $("p#mintError").text("Minting...");
+//             await n.wait();
+//             let a = `<a href='https://teloscan.io/tx/${n.hash}' target="_blank" rel="noreferrer">\n                                  View Transaction</a>`;
+//             $("p#mintError").html(`Successfully minted: ${a}`), getMinted();
+//             await getTokens(account);
+//         } else console.log("Ethereum object doesn't exist!"), $("p#mintError").text("Connect wallet and refresh!");
+//     } catch (t) {
+//         console.log(t), $("p#mintError").text(`${t.data.message}`);
+//     }
+// };
 
 $(function () {
     getMinted(),
