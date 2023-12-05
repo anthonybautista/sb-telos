@@ -77,7 +77,6 @@ const getMinted = async () => {
         connectedContract = new ethers.Contract(NFT_ADDRESS, NFT, t);
         let supply = Number(await connectedContract.totalSupply());
         let minted = Number(await connectedContract.minted());
-        supply = supply + minted;
         let max = Number(await connectedContract.maxMintable());
         max = supply + (max - minted);
         $("span#eggsMinted").text(`${supply}`), $("span#eggsMax").text(`${max}`), minted === max && $("button#mintEgg").prop("disabled", !0);
